@@ -11,7 +11,7 @@ def products_list(request):
     if request.method == 'GET':
         products = Product.objects.all()
         serializer = ProductSerializer(products, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
     elif request.method == 'POST':
          serializer = ProductSerializer(data=request.data)
@@ -33,12 +33,3 @@ def product_detail(request, pk):
     elif request.method == 'DELETE':
         product.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-@api_view(['GET'])
-def products_by_make(request, make):
-    products_make = Product.objects.filter(make=make) #Calling filter on objects instead of first making objects.all()
-    if products_make:
-        serializer = ProductSerializer(products_make, many=True)
-        return Response(serializer.data)
-    else:
-        return Response("No products of that make exist in the database.",status=status.HTTP_404_NOT_FOUND)

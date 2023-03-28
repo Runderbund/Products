@@ -7,4 +7,3 @@ class Product(models.Model):
     price = models.DecimalField()
     inventory_quantity = models.IntegerField()
     #Make image URL later
-
